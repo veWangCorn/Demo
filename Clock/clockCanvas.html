@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Clock Canvas</title>
+</head>
+<body>
+    <canvas id="clock" width="500px" height="500px"></canvas>
+</body>
+<script>
+    function draw(){
+        var time = new Date()
+        var hour = time.getHours()
+        var minute = time.getMinutes()
+        var second = time.getSeconds()
+        if(hour > 12) {
+            hour = hour -  12 
+        }
+        const hourR = (360/12/60/60) *hour *3600* Math.PI/180
+        const minuteR = (360/60/60) *minute *60* Math.PI/180
+        const secondR = (360/60)*second* Math.PI/180
+
+        const $clock = document.getElementById('clock')
+        const ctx = $clock.getContext('2d')
+        ctx.clearRect(0,0,500,500);
+        ctx.save()
+        ctx.beginPath()
+        ctx.arc(250,250,100,0,2*Math.PI)
+        ctx.translate(250,250);
+        ctx.rotate(Math.PI)
+        ctx.stroke()
+        // ctx.restore()
+        // ctx.closePath()
+
+
+        //分钟刻度
+        for(var i=0;i<60;i++){
+            ctx.beginPath()
+            ctx.save()
+            ctx.rotate(i*2*Math.PI/60)
+            ctx.moveTo(0,95)
+            ctx.lineTo(0,100)
+            ctx.stroke()
+            ctx.restore()
+            ctx.closePath()
+        }
+
+        //小时刻度
+        for(var k=0;k<12;k++){
+            ctx.beginPath()
+            ctx.save()
+            ctx.rotate(k*2*Math.PI/12)
+            ctx.moveTo(0,90)
+            ctx.lineTo(0,100)
+            ctx.stroke();
+            ctx.restore()
+            ctx.closePath()
+        }
+
+        //时针
+        ctx.save();
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = '#000000';
+        // ctx.rotate((hour+minute/60)*30*Math.PI/180);
+        ctx.rotate(hourR)
+        ctx.beginPath();
+        ctx.moveTo(0,0);
+        ctx.lineTo(0,60)
+        ctx.stroke();
+        ctx.closePath();
+        ctx.restore();
+
+        //分针
+        ctx.save()
+        ctx.lineWidth = 3
+        ctx.strokeStyle = 'green'
+        // ctx.rotate((minute+second/60)*Math.PI/30);
+        ctx.rotate(minuteR)
+        ctx.beginPath()
+        ctx.moveTo(0,0)
+        ctx.lineTo(0,70)
+        ctx.stroke()
+        ctx.closePath()
+        ctx.restore()
+
+        //秒针
+        ctx.save()
+        ctx.strokeStyle = '#3ce'
+        // ctx.rotate(second*Math.PI/30);
+        ctx.rotate(secondR)
+        ctx.beginPath()
+        ctx.moveTo(0,0)
+        ctx.lineTo(0,80)
+        ctx.stroke()
+        ctx.closePath()
+        ctx.restore()
+
+        ctx.restore()
+    }
+    // draw('clock');
+    // setInterval(draw('clock'),1000);
+    setInterval(draw, 1000); 
+</script>
+</html>
