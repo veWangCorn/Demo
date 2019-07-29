@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>棱形加载动画</title>
+    <style>
+        body{
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+        }
+        .loader{
+            width: 10em;
+            height: 10em;
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            grid-template-rows: repeat(3,1fr);
+            grid-gap: 0.5em;
+            transform: rotate(45deg);
+        }
+        .loader > span{
+            background-color: var(--c)
+        }
+        .loader > span:nth-child(7),
+        .loader > span:nth-child(3){
+            --c:tomato;
+        }
+        .loader > span:nth-child(7){
+            --d:0s;
+        }
+        .loader > span:nth-child(3){
+            --d:0.8s;
+        }
+        .loader > span:nth-child(4),
+        .loader > span:nth-child(8){
+            --c:gold;
+            --d:0.2s;
+        }
+        .loader > span:nth-child(1),
+        .loader > span:nth-child(5),
+        .loader > span:nth-child(9){
+            --c:limegreen;
+            --d:0.4s;
+        }
+        .loader > span:nth-child(2),
+        .loader > span:nth-child(6){
+            --c:dodgerblue;
+            --d:0.6s;
+        }
+        span{
+            animation: span-animate 2s linear infinite;
+            animation-delay: var(--d);
+            transform: scale(0);
+        }
+        @keyframes span-animate{
+            0%{
+                transform:rotate(0deg) scale(0)
+            }
+            40%,80%{
+                transform:rotate(1turn) scale(1)
+            }
+            100%{
+                transform: rotate(2turn) scale(0)
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</body>
+</html>
